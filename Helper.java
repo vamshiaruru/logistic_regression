@@ -38,17 +38,4 @@ class Helper{
         }
         return -1*(t*ln(y) + (1-t)*(ln(1-y)));
     }
-    double sum(double[] array){
-        double s = 0;
-        for(int i = 0; i < array.length; i++){
-            s = s + array[i];
-        }
-        return s;
-    }
-    void print(double[] array){
-        for (int i = 0; i < array.length ; i++ ) {
-            System.out.print(array[i] + " ");
-        }
-        System.out.println();
-    }
 }

@@ -1,5 +1,4 @@
 package logistic_regression;
-import java.util.Random;
 import java.util.*;
 
 class Classifier{
@@ -11,7 +10,6 @@ class Classifier{
         trainingData = Reader.read("train.txt");
         Random rand = new Random();
         for (int i = 0; i < w.length ; i++ ) {
-            // w[i] = (double)rand.nextInt(10);
             w[i] = 1;
         }
         buildData();
