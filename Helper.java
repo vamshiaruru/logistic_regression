@@ -23,8 +23,8 @@ class Helper{
         }
         return graidents;
     }
-    public static double logBase2(double t){
-        return Math.log(t);
+    public static double ln(double t){
+        return Math.log(t)/Math.log(2);
     }
     public static double error(double t, double y){
         if(t == y){
@@ -36,8 +36,7 @@ class Helper{
         if(y == 1 && t == 0){
             return error(t, 0.99999);
         }
-        double e = -1*(t*Math.log(y) + (1-t)*(Math.log(1-y)));
-        return e;
+        return -1*(t*ln(y) + (1-t)*(ln(1-y)));
     }
     double sum(double[] array){
         double s = 0;

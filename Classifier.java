@@ -34,7 +34,7 @@ class Classifier{
         return Helper.sigmoid(w, x);
     }
     void logistic_regression(){
-        double step_size = 0.001;
+        double step_size = 0.0001;
         double[] glob_gradients = {0,0,0,0,0}; 
         for (int i = 0; i < t.length; i++) {
             double[] x = X.get(i);
@@ -58,7 +58,10 @@ class Classifier{
         return error;
     }
     void measureError(){
-        int negcount = 0;
+        int truePositives = 0;
+        int trueNegatives = 0;
+        int falsePositives = 0;
+        int falseNegatives = 0;        
         ArrayList<double[]> testdata = Reader.read("test.txt");
         for (double[] y : testdata) {
             double[] z = new double[5];
@@ -67,27 +70,42 @@ class Classifier{
                 z[i] = y[i];
             }
             double yn = predict(z);
-            if(yn < 0.5){
+            if(yn <= 0.5){
                 yn = 0;
             }else{
                 yn = 1;
             }
             double tn = y[y.length - 1];
-            if (yn != tn) {
-                negcount++;
+            if(tn == 1){
+                if(yn == 1){
+                    truePositives++;
+                }else{
+                    falseNegatives++;
+                }
+            }else{
+                if(yn == 0){
+                    trueNegatives++;
+                }else{
+                    falsePositives++;
+                }
             }
         }
-        System.out.println(negcount);
+        double precision = ((double)truePositives / (truePositives + falsePositives));
+        double recall = ((double)truePositives / (truePositives + falseNegatives));
+        System.out.println("True Positives  :" + truePositives);
+        System.out.println("True Negatives  :" + trueNegatives);
+        System.out.println("False Positives :" + falsePositives);
+        System.out.println("False Negatives :" + falseNegatives);
+        System.out.println("Precision       :" + precision);
+        System.out.println("Recall          :" + recall);
     }
     public static void main(String[] args) {
         Classifier c = new Classifier();
         double error = c.measureLogError();
-        while(error > 19.581){
+        while(error > 28.4){
             c.logistic_regression();
             error = c.measureLogError();
         }
         c.measureError();
     }
 }
-// 19.58072719885974
-// 86
